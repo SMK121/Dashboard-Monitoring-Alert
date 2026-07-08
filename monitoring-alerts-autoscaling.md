@@ -1,174 +1,55 @@
-# Monitoring, Load Testing & Application Verification
+# Evidence Screenshots
 
-## Overview
+## Application Deployment
 
-This exercise demonstrates deploying and testing the Tic Tac Toe application on an AWS EC2 instance.
+The Tic Tac Toe application was successfully deployed on the EC2 instance and managed using PM2.
 
-The process included:
-
-- Running the deployment script.
-- Starting the Node.js application.
-- Managing the application using PM2.
-- Testing application performance using Apache Bench.
-- Monitoring server performance during load testing.
+Screenshot:
+- PM2 process showing the application running with status: online.
 
 ---
 
-# Deployment Script
+## Load Testing with Apache Bench
 
-The deployment was automated using the script:
+Apache Bench was used to simulate traffic against the application.
 
-**Script Demo TikTac.sh**
+Command used:
 
-The script is used to prepare the EC2 instance and deploy the application.
+    ab -n 50000 -c 200 http://108.131.107.167/
 
-The script performs:
-
-- System package updates.
-- Installation of required dependencies.
-- Node.js setup.
-- Application configuration.
-- Application startup using PM2.
-- Nginx configuration.
+Screenshot:
+- Apache Bench results showing completed requests and performance metrics.
 
 ---
 
-# Running the Deployment Script
+## CPU Monitoring During Load Test
 
-Make the script executable:
+CloudWatch EC2 monitoring was used to observe CPU utilisation during the performance test.
 
-    chmod +x "Script Demo TikTac.sh"
-
-Run the script:
-
-    ./"Script Demo TikTac.sh"
+Screenshot:
+- CPU utilisation graph showing increased CPU usage during load testing and recovery afterwards.
 
 ---
 
-# Application Setup
+## CloudWatch CPU Alarm
 
-Navigate to the application folder:
+A CloudWatch alarm was created to monitor EC2 CPU utilisation.
 
-    cd ~/tech610-tic-tac-toe/app
+Configuration:
+- Metric: EC2 CPUUtilization
+- Threshold: CPU utilisation greater than 8% (testing)
+- Notification: SNS email alert
 
-Install application dependencies:
-
-    npm install
-
-Start the Node.js application:
-
-    pm2 start index.js
-
-Check application status:
-
-    pm2 status
-
-Expected result:
-
-    status: online
+Screenshot:
+- CloudWatch alarm configuration.
+- Alarm state change notification email.
 
 ---
 
-# Nginx Verification
+## SNS Email Notification
 
-Check Nginx is running:
+SNS was configured to send email alerts when the CloudWatch alarm entered the ALARM state.
 
-    sudo systemctl status nginx
-
-Restart Nginx if required:
-
-    sudo systemctl restart nginx
-
-The application is accessed through:
-
-    http://<EC2-Public-IP>
-
-Nginx acts as a reverse proxy and forwards incoming traffic to the Node.js application.
-
----
-
-# Apache Bench Load Testing
-
-Apache Bench was used to simulate user traffic.
-
-Install Apache Bench:
-
-    sudo apt install apache2-utils -y
-
-Run the load test:
-
-    ab -n 1000 -c 50 http://<EC2-Public-IP>/
-
-## Test Parameters
-
-| Parameter | Description |
-|---|---|
-| -n 1000 | Total number of requests sent |
-| -c 50 | Number of concurrent requests |
-
----
-
-# Monitoring Performance
-
-During load testing, server performance was monitored using:
-
-    top
-
-This allows monitoring of:
-
-- CPU usage
-- Memory usage
-- Running processes
-
-AWS EC2 Monitoring can also be used to view:
-
-- CPU Utilisation
-- Network activity
-- Instance performance
-
----
-
-# Load Test Results
-
-Example results:
-
-    Complete requests: 1000
-    Failed requests: 0
-    Requests per second: 1158
-    Time per request: 43 ms
-
-## Summary
-
-The application successfully handled the simulated traffic load.
-
-Results showed:
-
-- 1000 requests completed successfully.
-- No failed requests.
-- Node.js application remained online.
-- Nginx successfully routed traffic.
-- EC2 instance remained stable during testing.
-
----
-
-# Key Commands Used
-
-    pm2 status
-
-Checks the current application processes.
-
-    pm2 start index.js
-
-Starts the Node.js application.
-
-    sudo systemctl restart nginx
-
-Restarts the Nginx service.
-
-    ab -n 1000 -c 100 http://<EC2-Public-IP>/
-
-Runs a performance/load test.
-
-    top
-
-Monitors system resources.
+Screenshot:
+- Email confirmation.
+- Alarm notification received.
