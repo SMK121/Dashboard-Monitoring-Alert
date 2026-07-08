@@ -1,55 +1,53 @@
-# Evidence Screenshots
+# Monitoring and Alerting Evidence
 
-## Application Deployment
+## Apache Bench Load Testing
 
-The Tic Tac Toe application was successfully deployed on the EC2 instance and managed using PM2.
-
-Screenshot:
-- PM2 process showing the application running with status: online.
-
----
-
-## Load Testing with Apache Bench
-
-Apache Bench was used to simulate traffic against the application.
+Apache Bench was used to simulate user traffic against the Tic Tac Toe application to test performance under load.
 
 Command used:
 
     ab -n 50000 -c 200 http://108.131.107.167/
 
+The test generated concurrent requests and allowed CPU utilisation changes to be monitored.
+
 Screenshot:
-- Apache Bench results showing completed requests and performance metrics.
+
+![<img width="1190" height="483" alt="Apache Bench Load Testing" src="https://github.com/user-attachments/assets/3e2515a3-9383-4b78-b184-eb478432b88f" />)
 
 ---
 
-## CPU Monitoring During Load Test
+## CloudWatch CPU Monitoring
 
-CloudWatch EC2 monitoring was used to observe CPU utilisation during the performance test.
+AWS CloudWatch was used to monitor EC2 CPU utilisation during the load test.
+
+The graph shows CPU utilisation increasing during the traffic simulation and returning back towards normal levels after the test completed.
 
 Screenshot:
-- CPU utilisation graph showing increased CPU usage during load testing and recovery afterwards.
+
+![EC2 CPU Utilisation Load Test](<img width="1899" height="792" alt="EC2_CPUUtilisation_Load_Test" src="https://github.com/user-attachments/assets/b371223b-de7d-404c-9f1d-e4e342c8a8c0" />)
 
 ---
 
-## CloudWatch CPU Alarm
+## SNS Email Subscription Confirmation
 
-A CloudWatch alarm was created to monitor EC2 CPU utilisation.
+Amazon SNS was configured to send email notifications when the CloudWatch alarm was triggered.
 
-Configuration:
-- Metric: EC2 CPUUtilization
-- Threshold: CPU utilisation greater than 8% (testing)
-- Notification: SNS email alert
+The subscription was confirmed through the AWS SNS confirmation email.
 
 Screenshot:
-- CloudWatch alarm configuration.
-- Alarm state change notification email.
+
+![SNS Subscription Confirmation](<img width="867" height="915" alt="AWS - Subscription Confirmation" src="https://github.com/user-attachments/assets/1c43207c-d691-4bf3-8774-ce268efc4dde" />
+)
 
 ---
 
-## SNS Email Notification
+## CloudWatch Alarm Alert Notification
 
-SNS was configured to send email alerts when the CloudWatch alarm entered the ALARM state.
+A CloudWatch CPU alarm was created and connected to the SNS topic.
+
+When CPU utilisation exceeded the configured threshold, an email notification was received confirming the alarm entered the ALARM state.
 
 Screenshot:
-- Email confirmation.
-- Alarm notification received.
+
+![AWS Alarm Alert Setup Confirmation](<img width="844" height="1325" alt="AWS - Alarm Alert" src="https://github.com/user-attachments/assets/e580d192-7e23-4845-af81-68bea9556343" />
+)
