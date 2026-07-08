@@ -47,7 +47,7 @@ AWS EC2 Instance
 
 The application deployment was automated using:
 
-**Script Demo TikTac.sh**
+**Script Demo TicTac.sh**
 
 The script prepares the EC2 instance and configures the application environment.
 
@@ -68,13 +68,13 @@ The script performs:
 Make the script executable:
 
 ```bash
-chmod +x "Script Demo TikTac.sh"
+chmod +x "Script Demo TicTac.sh"
 ```
 
 Run the deployment script:
 
 ```bash
-./"Script Demo TikTac.sh"
+./"Script Demo TicTac.sh"
 ```
 
 ---
